@@ -12,3 +12,4 @@ mvn clean test -Dspring.version=4.1.0.RELEASE
 ```
 
 
+See: https://jira.spring.io/browse/SPR-12165
