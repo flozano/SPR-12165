@@ -1,7 +1,10 @@
 package com.flozano.issuewithemptybodies;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -32,18 +35,22 @@ public class SampleTest {
 
 	@Test
 	public void testGetSomething() throws Exception {
-		this.mockMvc.perform(get("/something")).andExpect(status().isOk());
+		this.mockMvc.perform(get("/something")).andExpect(status().isOk())
+				.andExpect(content().string(is(equalTo("Hello there"))));
 	}
 
 	@Test
 	public void testPostSomething() throws Exception {
-		this.mockMvc.perform(post("/something").content("abcd1234")).andExpect(
-				status().isCreated());
+		this.mockMvc
+				.perform(post("/something").content("abcd1234"))
+				.andExpect(status().isCreated())
+				.andExpect(content().string(is(equalTo("Input was: abcd1234"))));
 	}
 
 	@Test
 	public void testPostNothing() throws Exception {
-		this.mockMvc.perform(post("/something").content("")).andExpect(
-				status().isCreated());
+		this.mockMvc.perform(post("/something").content(""))
+				.andExpect(status().isCreated())
+				.andExpect(content().string(is(equalTo("Input was: "))));
 	}
 }
